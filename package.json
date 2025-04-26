@@ -1,23 +1,50 @@
 {
   "name": "audioverse-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "module",
+  "_moduleAliases": {
+    "@": "./src",
+    "@config": "./src/config",
+    "@entities": "./src/entities",
+    "@controllers": "./src/controllers",
+    "@interfaces": "./src/interfaces",
+    "@utils": "./src/utils",
+    "@repositories": "./src/repositories",
+    "@services": "./src/services",
+    "@routes": "./src/routes"
+  },
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "start": "tsx src/server.ts",
+    "dev": "nodemon --exec tsx src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "module-alias": "^2.2.3",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.14.0",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.22"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
-    "@types/node": "^22.14.1",
+    "@types/module-alias": "^2.0.4",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.15.2",
     "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.3"
   }
 }
