@@ -38,7 +38,28 @@ async updateInterest(id: number, interestData: Partial<IInterest>): Promise<IInt
     }
   }
 
+async getAllInterests(): Promise<IInterest[]> {
+    const interests = await this.interestRepository.find();
+    return interests.map(interest => ({
+        image_url: interest.image_url,
+        status: interest.status
+    }));
+}
 
+async getInterestById(id: number): Promise<IInterest | null> {
+    const interest = await this.interestRepository.findOneBy({ id });
+    if (!interest) return null;
+    return {
+        image_url: interest.image_url,
+        status: interest.status
+    };
+}
 
+async deleteInterest(id: number): Promise<void> {
+    const result = await this.interestRepository.delete(id);
+    if (result.affected === 0) {
+        throw new Error(`Interest with id ${id} not found`);
+    }
+}
 
 }
