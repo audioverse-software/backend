@@ -17,7 +17,11 @@ async createInterest(imageUrl: string): Promise<IInterest> {
         image_url: imageUrl,
         status: "pending" // Default status
     });
-    return await this.interestRepository.save(interest);
+    const SavedInterest =  await this.interestRepository.save(interest);
+    return {
+        image_url: SavedInterest.image_url,
+        status: SavedInterest.status
+    }
 }
 
 async updateInterest(id: number, interestData: Partial<IInterest>): Promise<IInterest> {
@@ -34,12 +38,12 @@ async updateInterest(id: number, interestData: Partial<IInterest>): Promise<IInt
     return {
         image_url: updatedInterest.image_url,
         status: updatedInterest.status,
-       
     }
   }
 
 async getAllInterests(): Promise<IInterest[]> {
     const interests = await this.interestRepository.find();
+    console.log(interests);
     return interests.map(interest => ({
         image_url: interest.image_url,
         status: interest.status
