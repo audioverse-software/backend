@@ -1,6 +1,7 @@
 import { AppDataSource } from "@/config/database";
 import { Interest } from "@/entities/Interest";
 import { IInterest } from "@/interfaces/iInterest";
+import { plainToInstance } from "class-transformer";
 import { Repository } from "typeorm";
 
 
@@ -19,12 +20,23 @@ async createInterest(imageUrl: string): Promise<IInterest> {
     return await this.interestRepository.save(interest);
 }
 
-async updateInterest(id: number, interestData: Partial<IInterest>): Promise<IInterest | null> {
-    const foundInterest: Interest | null = this.interestRepository.findOneBy({ id });
+async updateInterest(id: number, interestData: Partial<IInterest>): Promise<IInterest> {
+    const foundInterest = await this.interestRepository.findOneBy({ id });
     if (!foundInterest) {
-        return null;
+      throw new Error(`Interest with id ${id} not found`);
     }
-}
+    this.interestRepository.merge(foundInterest, {
+      image_url: interestData.image_url ?? foundInterest.image_url,
+      status: interestData.status as 'inactive' | 'active' | 'pending' ?? foundInterest.status,
+    });
+    const updatedInterest = await this.interestRepository.save(foundInterest);
+
+    return {
+        image_url: updatedInterest.image_url,
+        status: updatedInterest.status,
+       
+    }
+  }
 
 
 
