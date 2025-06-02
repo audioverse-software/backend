@@ -1,7 +1,7 @@
 import { DataSource, DataSourceOptions, In } from "typeorm";
 import { config } from "@/config/env";
 import { User } from "@/entities/User";
-import { Interest } from "@/entities/interest";
+import { Interest } from "@/entities/Interest";
 
 const isProduction = config.nodeEnv === "production";
 
