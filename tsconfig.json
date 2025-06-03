@@ -26,6 +26,6 @@
     }
 
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/services/category"],
   "exclude": ["node_modules", "dist"]
 }
