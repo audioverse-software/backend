@@ -1,6 +1,7 @@
-import { DataSource, DataSourceOptions } from "typeorm";
+import { DataSource, DataSourceOptions, In } from "typeorm";
 import { config } from "@/config/env";
 import { User } from "@/entities/User";
+import { Interest } from "@/entities/Interest";
 
 const isProduction = config.nodeEnv === "production";
 
@@ -11,7 +12,7 @@ const mysqlConfig: DataSourceOptions = {
   username: config.database.username,
   password: config.database.password,
   database: config.database.name,
-  entities: [User],
+  entities: [User, Interest],
   synchronize: config.database.synchronize,
   logging: config.database.logging,
   extra: {
@@ -22,7 +23,7 @@ const mysqlConfig: DataSourceOptions = {
 const sqliteConfig: DataSourceOptions = {
   type: "sqlite",
   database: "./dev.sqlite",
-  entities: [User],
+  entities: [User, Interest],
   synchronize: config.database.synchronize,
   logging: config.database.logging,
   enableWAL: true,
