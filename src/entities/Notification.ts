@@ -27,6 +27,6 @@ export class Notification {
     })
     status!: "unread" | "read" | "archived";
 
-    @ManyToOne(() => User, (user) => user.id)
-    userKeyId!: number;
+    @ManyToOne(() => User, (user) => user.id, { nullable: false})
+    userId!: number;
 }
