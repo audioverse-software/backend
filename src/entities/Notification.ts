@@ -16,19 +16,17 @@ export class Notification {
     })
     title!: string;
     @Column({
-        name: '',
-        type: 'text',
+        type: 'varchar',
         nullable: false
     })
     body!: string;
 
     @Column({
-        type: 'enum',
+        type: 'varchar',
         default: "unread",
     })
     status!: "unread" | "read" | "archived";
 
-    @Column()
     @ManyToOne(() => User, (user) => user.id)
-    user_id!: number;
+    userKeyId!: number;
 }
