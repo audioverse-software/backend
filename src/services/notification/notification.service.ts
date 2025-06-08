@@ -21,22 +21,23 @@ export class NotificationService {
     }
 
     // create a new notification
-    async createNotification(createNotification: CreateNotificationDTO): Promise<String> {
+    async createNotification(createNotification: CreateNotificationDTO) {
         // get the user out 
         // call the user service 
         try{
+            console.log("received :::", createNotification);
             const user: User = await this.userService.findUserById(createNotification.userId);
-        const newNotification = plainToInstance(Notification, {
-            ...createNotification,
+        const newNotification = this.notificationRepository.create({
+            title: createNotification.title,
+            body: createNotification.body,
+            status: "unread",
             userId: user.id
-        }, {
-            excludeExtraneousValues: true
         });
+        console.log("instance ::: ",newNotification);
 
-        // save the nofication
         await this.notificationRepository.save(newNotification);
 
-        return "created successfully...";
+        return "saved successfully...";
     }catch(error) {
         throw new Error(error as string);
     }
@@ -45,7 +46,7 @@ export class NotificationService {
     async getNotificationById(id: number, userId: number): Promise<NotificationResponseDTO> {
         // get a particular user notification
         const notification: Notification | null = await this.notificationRepository.findOne({
-            where: { id, userId }
+            where: { id: id, userId: userId }
         });
 
         if (!notification) {
@@ -84,14 +85,14 @@ export class NotificationService {
     // }
 
     async getUserNotication(userId: number, status?: "unread" | "read" | "archived"): Promise<NotificationResponseDTO[]> {
-        await this.userService.findUserById(userId);
+        const user = await this.userService.findUserById(userId);
         
         const foundUserNotifications: Notification[] = status
             ? await this.notificationRepository.find({
-                where: { userId: userId, status: status }
+                where: { userId: user.id, status: status }
             })
             : await this.notificationRepository.find({
-                where: { userId: userId }
+                where: { userId: user.id }
             });
 
         const userNotificationResponse: NotificationResponseDTO[] = foundUserNotifications.map((notification) =>

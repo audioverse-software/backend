@@ -1,5 +1,6 @@
 import { CreateNotificationDTO, UpdateNotification } from "@/dtos/notification/notification.dto";
 import { NotificationService } from "@/services/notification/notification.service";
+import { formatResponse } from "@/utils/response";
 import { Request, Response } from "express";
 
 
@@ -16,10 +17,10 @@ export class NotificationController {
         try{
             const createNotification: CreateNotificationDTO = req.body;
             const response = await this.notificationService.createNotification(createNotification);
-            res.status(201).json(response);
+            res.status(201).json(formatResponse(response));
 
-        }catch(error) {
-            res.status(401).json({error});
+        }catch(error: any) {
+            res.status(401).json(formatResponse(Error, error.message));
         }
     }
 
@@ -30,9 +31,9 @@ export class NotificationController {
 
             const response = await this.notificationService.getNotificationById(notificationId, userId);
 
-            res.status(200).json(response);
-        }catch(error) {
-            res.status(403).json({error})
+            res.status(200).json(formatResponse(response));
+        }catch(error: any) {
+            res.status(403).json(formatResponse(Error, error.message))
         }
     }
 
@@ -44,9 +45,9 @@ export class NotificationController {
 
             const response = await this.notificationService.getUserNotication(userId, status);
 
-            res.status(200).json(response);
-        }catch(error){
-            res.status(401).json({error});
+            res.status(200).json(formatResponse(response));
+        }catch(error: any){
+            res.status(401).json(formatResponse(Error, error.message));
         }
     }
 
@@ -55,9 +56,9 @@ export class NotificationController {
             const updateNotificationDto: UpdateNotification = req.body;
             const response = await this.notificationService.updateNotication(updateNotificationDto);
 
-            res.status(200).json(response);
-        }catch(error) {
-            res.status(403).json({error})
+            res.status(200).json(formatResponse(response));
+        }catch(error: any) {
+            res.status(403).json(formatResponse(Error, error.message))
         }
     }
 
@@ -68,9 +69,9 @@ export class NotificationController {
 
             const response = await this.notificationService.deleteNotification(id, userId);
 
-            res.status(200).json(response);
-        }catch(error) {
-            res.status(401).json({error});
+            res.status(200).json(formatResponse(response));
+        }catch(error: any) {
+            res.status(401).json(formatResponse(Error, error.message));
         }
     }
 
@@ -81,9 +82,9 @@ export class NotificationController {
 
             const response = await this.notificationService.deleteNotifications(userId, status);
 
-            res.status(200).json(response);
-        }catch(error) {
-            res.status(402).json({error});
+            res.status(200).json(formatResponse(response));
+        }catch(error: any) {
+            res.status(402).json(formatResponse(Error, error.message));
         }
     }
 }

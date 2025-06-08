@@ -11,8 +11,8 @@ const interestRoutes = new InterestRoutes();
 const notificationRoutes = new NotificationApis();
 interestRoutes.setRouter();
 
-router.use("/api/users", userRoutes);
-router.use("/api/categories", categoryRoutes);
+router.use("/users", userRoutes);
+router.use("/categories", categoryRoutes);
 router.use("/interest", interestRoutes.getRouter());
 router.use("/notification", notificationRoutes.getRouer());
 

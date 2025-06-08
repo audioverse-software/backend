@@ -23,10 +23,11 @@ export class Notification {
 
     @Column({
         type: 'varchar',
-        default: "unread",
     })
     status!: "unread" | "read" | "archived";
 
-    @ManyToOne(() => User, (user) => user.id, { nullable: false})
+    @Column({
+        type: 'bigint'
+    })
     userId!: number;
 }
