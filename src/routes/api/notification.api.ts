@@ -9,6 +9,7 @@ export class NotificationApis {
     constructor() {
         this.notificationController = new NotificationController();
         this.router = Router();
+        this.setRouter();
     }
 
 
@@ -22,7 +23,7 @@ export class NotificationApis {
     }
 
     getRouer(){
-        this.router;
+        return this.router;
     }
 
 }

@@ -22,13 +22,10 @@ export class InterestController {
     }   
 
     async updateInterest(req: Request, res: Response) {
-        const interestId = Number.parseInt(req.params.id);
-        const interestData = req.body;
         try {
+            const interestId = Number.parseInt(req.params.id);
+            const interestData = req.body;
             const updatedInterest = await this.interestService.updateInterest(interestId, interestData);
-            if (!updatedInterest) {
-                return res.status(404).json({ error: "Interest not found" });
-            }
             res.json(updatedInterest);
         } catch (error: any) {
             res.status(400).json({ error: error.message });
@@ -43,15 +40,12 @@ export class InterestController {
         }
     }
     async getInterestById(req: Request, res: Response) {
-        const interestId = Number.parseInt(req.params.id);
         try {
+            const interestId = Number.parseInt(req.params.id);
             const interest = await this.interestService.getInterestById(interestId);
-            if (!interest) {
-                return res.status(404).json({ error: "Interest not found" });
-            }
             res.json(interest);
         } catch (error: any) {
-            res.status(500).json({ error: error.message });
+            res.status(404).json({ error: error.message });
         }
     }
     async deleteInterest(req: Request, res: Response) {
