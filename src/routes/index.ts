@@ -1,7 +1,7 @@
 import { Router } from "express";
 import userRoutes from "@/routes/api/users";
 import { InterestRoutes } from "./api/interest.api";
-
+import authRoutes from "./api/auth.api";
 import categoryRoutes from "@routes/category/category.routes";
 import { NotificationApis } from "./api/notification.api";
 
@@ -11,6 +11,7 @@ const interestRoutes = new InterestRoutes();
 const notificationRoutes = new NotificationApis();
 interestRoutes.setRouter();
 
+router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/categories", categoryRoutes);
 router.use("/interest", interestRoutes.getRouter());
